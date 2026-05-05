@@ -671,7 +671,16 @@ function createScheduleItemHtml(item, config) {
     `;
 }
 
-function formatUtcRangeToLocal(utcStart, utcEnd) {
+function formatUtcRangeToLocal(start, end) {
+  function format(t) {
+    let [h, m] = t.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    return `${h}:${m.toString().padStart(2, '0')} ${ampm}`;
+  }
+
+  return `${format(start)} - ${format(end)}`;
+}
   // Create date objects for today at those UTC times
   const d1 = new Date();
   const [h1, m1] = utcStart.split(':');
