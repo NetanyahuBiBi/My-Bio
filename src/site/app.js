@@ -563,22 +563,8 @@ function createStatusHtml(config) {
 // Check current time against schedule (All calculations in UTC)
 function determineCurrentStatus(config) {
   const now = new Date();
-const parts = new Intl.DateTimeFormat("en-US", {
-  timeZone: "America/Los_Angeles",
-  hour12: false,
-  weekday: "short",
-  hour: "2-digit",
-  minute: "2-digit"
-}).formatToParts(now);
-
-const hour = parseInt(parts.find(p => p.type === "hour").value);
-const minute = parseInt(parts.find(p => p.type === "minute").value);
-const weekdayStr = parts.find(p => p.type === "weekday").value;
-
-const dayMap = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-
-const utcDay = dayMap[weekdayStr];
-const currentUtcMinutes = hour * 60 + minute;
+  const utcDay = now.getUTCDay(); // 0 (Sun) - 6 (Sat)
+  const currentUtcMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
 
   const isWeekend = utcDay === 0 || utcDay === 6;
 
