@@ -65,7 +65,7 @@ const CONFIG = {
     "enabled": true,
     
     // YOUR timezone. Used only to show "My Time" in the tooltip.
-    "ownerTimeZone": "America/New_York", 
+    "ownerTimeZone": "America/Los_Angeles", 
 
     "default": {
       "text": "Offline Or Late Night Modding",
@@ -85,23 +85,30 @@ const CONFIG = {
         "text": "Busy / Modding",
         "color": "#EF4444", // Red
         "icon": "assets/images/dnd.webp",
-        "message": "Focused on work. Replies slow."
+        "message": "Doing what I love."
       },
       "sleeping": {
-        "text": "Sleeping Or Smoking a pack on a walk.",
+        "text": "Sleeping Or Staying up",
         "color": "#6d7684", // Gray
         "icon": "assets/images/idle.webp", // Using idle for sleeping/offline typically
-        "message": "Dreaming of electric sheep."
+        "message": "Thinking about life."
+         },
+      "Away": {
+        "text": "Away",
+        "color": "#EF4444", // Red
+        "icon": "assets/images/dnd.webp",
+        "message": "Boxing or Grappling"
       }
     },
 
     // Schedule **IN UTC**
     // Days: "weekdays", "weekends", or "daily"
     "schedule": [
-      { "status": "sleeping", "days": "daily",    "start": "06:00", "end": "13:00" }, 
-      { "status": "busy",     "days": "weekdays", "start": "13:00", "end": "05:00" },
-      { "status": "available","days": "weekdays", "start": "21:00", "end": "23:00" }, // Wrap around midnight works
-      { "status": "available","days": "weekends", "start": "13:00", "end": "05:00" }
+      { "status": "sleeping", "days": "daily",    "start": "10:00", "end": "06:00" }, 
+      { "status": "busy",     "days": "weekdays", "start": "06:00", "end": "10:00" },
+      { "status": "available","days": "weekdays", "start": "14:00", "end": "16:00" }, // Wrap around midnight works
+      { "status": "available","days": "weekends", "start": "12:00", "end": "17:00" }
+      { "status": "Away", "days": "daily",    "start": "10:00", "end": "06:00" }, 
     ]
   },
 
