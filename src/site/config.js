@@ -64,7 +64,7 @@ const CONFIG = {
     "enabled": true,
     "autoplay": true,
     "volume": 0.35,
-    "shuffle": false,
+    "shuffle": true,
 
     // Replace these with your Discord CDN MP3 links
 "tracks": [
