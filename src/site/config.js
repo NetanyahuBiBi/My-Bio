@@ -56,6 +56,24 @@ const CONFIG = {
     }
   ],
 
+
+  // ---------------------------------------------------------------------------
+  // MUSIC PLAYER
+  // ---------------------------------------------------------------------------
+  "music": {
+    "enabled": true,
+    "autoplay": true,
+    "volume": 0.35,
+    "shuffle": false,
+
+    // Replace these with your Discord CDN MP3 links
+    "tracks": [
+      "https://cdn.discordapp.com/attachments/SONG1.mp3",
+      "https://cdn.discordapp.com/attachments/SONG2.mp3",
+      "https://cdn.discordapp.com/attachments/SONG3.mp3"
+    ]
+  },
+
   // ---------------------------------------------------------------------------
   // 3. SCHEDULE & STATUS
   // All times are in UTC (24-hour format).
