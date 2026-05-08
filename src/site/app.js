@@ -693,8 +693,9 @@ function initMusicPlayer(musicConfig) {
   audio.loop = false;
   audio.controls = false;
 
-  let currentTrack = Math.floor(Math.random() * tracks.length);
   const tracks = musicConfig.tracks.filter(Boolean);
+  
+  let currentTrack = Math.floor(Math.random() * tracks.length);
 
   function playTrack(index) {
     audio.src = tracks[index];
