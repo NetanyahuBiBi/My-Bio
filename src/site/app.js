@@ -758,16 +758,14 @@ function initMusicPlayer(musicConfig) {
   // PLAYER UI
   const player = document.createElement("div");
 
-  player.style.position = "fixed";
-  player.style.bottom = "20px";
-  player.style.left = "20px";
-  player.style.width = "320px";
+  player.style.position = "relative";
+  player.style.width = "100%";
+  player.style.marginTop = "20px";
   player.style.padding = "16px";
   player.style.borderRadius = "16px";
   player.style.background = "rgba(15,15,25,.85)";
   player.style.backdropFilter = "blur(12px)";
   player.style.border = "1px solid rgba(255,255,255,.08)";
-  player.style.zIndex = "9999";
   player.style.color = "white";
   player.style.fontFamily = "Inter, sans-serif";
 
@@ -833,8 +831,14 @@ function initMusicPlayer(musicConfig) {
   player.appendChild(songName);
   player.appendChild(controls);
 
-  document.body.appendChild(player);
+const linksContainer = document.getElementById("linksContainer");
 
+if (linksContainer) {
+  linksContainer.parentNode.insertBefore(
+    player,
+    linksContainer.nextSibling
+  );
+}
   // CLICK TO ENTER
   const overlay = document.createElement("div");
 
