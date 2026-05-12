@@ -395,51 +395,58 @@ function getIconHtml(iconStr) {
 // Generic Copy Logic
 function initializeCopyButton(buttonElement, textToCopy, originalSubtitle) {
   if (!buttonElement) return;
-  const subtitleElement = buttonElement.querySelector('.button-subtitle');
 
-  buttonElement.addEventListener('click', (e) => {
+  const subtitleElement =
+    buttonElement.querySelector('.button-subtitle');
+
+  buttonElement.addEventListener('click', async (e) => {
     e.preventDefault();
 
     // Prevent clicking while animating
     if (buttonElement.classList.contains('animating')) return;
 
-    navigator.clipboard.writeText(textToCopy).then(() => {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+
       if (subtitleElement) {
         const oldText = subtitleElement.textContent;
+
         buttonElement.classList.add('animating');
 
         // 1. Fade Out
         buttonElement.classList.add('fading-out');
 
         setTimeout(() => {
-          // 2. Switch Content (Fast, while invisible)
-          subtitleElement.textContent = 'Copied!';
+          // 2. Switch Content
+          subtitleElement.textContent = '✔ Copied!';
           buttonElement.classList.add('show-copied-feedback');
 
           // 3. Fade In
           buttonElement.classList.remove('fading-out');
 
-          // 4. Wait, then Reverse
+          // 4. Wait then reverse
           setTimeout(() => {
-            // 5. Fade Out again
             buttonElement.classList.add('fading-out');
 
             setTimeout(() => {
-              // 6. Revert Content
-              subtitleElement.textContent = originalSubtitle || oldText;
-              buttonElement.classList.remove('show-copied-feedback');
+              subtitleElement.textContent =
+                originalSubtitle || oldText;
 
-              // 7. Fade In original
+              buttonElement.classList.remove(
+                'show-copied-feedback'
+              );
+
               buttonElement.classList.remove('fading-out');
               buttonElement.classList.remove('animating');
-            }, 300); // Transition time
-          }, 2000); // Display time
-        }, 300); // Transition time
+            }, 300);
+          }, 2000);
+        }, 300);
       }
-    });
+    } catch (err) {
+      console.error('Clipboard copy failed:', err);
+    }
   });
 }
-
 // --- STATUS INDICATOR AND SCHEDULING LOGIC ---
 
 // --- STATUS INDICATOR AND SCHEDULING LOGIC ---
