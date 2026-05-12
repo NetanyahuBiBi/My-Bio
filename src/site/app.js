@@ -694,20 +694,42 @@ function initMusicPlayer(musicConfig) {
   audio.controls = false;
 
   const tracks = musicConfig.tracks.filter(Boolean);
-  
+
   let currentTrack = Math.floor(Math.random() * tracks.length);
 
-  function playTrack(index) {
-    audio.src = tracks[index];
+  function getTrackName(url) {
+    try {
+      const split = url.split("/").pop().split("?")[0];
 
-    audio.play().then(() => {
-      console.log("Music playing");
-    }).catch((err) => {
-      console.error("Audio play failed:", err);
-    });
+      return decodeURIComponent(split)
+        .replace(".mp3", "")
+        .replace(/[_-]/g, " ");
+    } catch {
+      return "Unknown Track";
+    }
   }
 
-  audio.addEventListener("ended", () => {
+  function updateSongName() {
+    songName.textContent = getTrackName(tracks[currentTrack]);
+  }
+
+  function playTrack(index) {
+    currentTrack = index;
+
+    audio.src = tracks[currentTrack];
+
+    updateSongName();
+
+    audio.play()
+      .then(() => {
+        playBtn.textContent = "⏸";
+      })
+      .catch((err) => {
+        console.error("Audio play failed:", err);
+      });
+  }
+
+  function nextTrack() {
     currentTrack++;
 
     if (currentTrack >= tracks.length) {
@@ -715,11 +737,105 @@ function initMusicPlayer(musicConfig) {
     }
 
     playTrack(currentTrack);
+  }
+
+  function previousTrack() {
+    currentTrack--;
+
+    if (currentTrack < 0) {
+      currentTrack = tracks.length - 1;
+    }
+
+    playTrack(currentTrack);
+  }
+
+  audio.addEventListener("ended", () => {
+    nextTrack();
   });
 
   document.body.appendChild(audio);
 
-  // BIG PLAY BUTTON
+  // PLAYER UI
+  const player = document.createElement("div");
+
+  player.style.position = "fixed";
+  player.style.bottom = "20px";
+  player.style.left = "20px";
+  player.style.width = "320px";
+  player.style.padding = "16px";
+  player.style.borderRadius = "16px";
+  player.style.background = "rgba(15,15,25,.85)";
+  player.style.backdropFilter = "blur(12px)";
+  player.style.border = "1px solid rgba(255,255,255,.08)";
+  player.style.zIndex = "9999";
+  player.style.color = "white";
+  player.style.fontFamily = "Inter, sans-serif";
+
+  const songName = document.createElement("div");
+
+  songName.style.fontSize = "15px";
+  songName.style.fontWeight = "700";
+  songName.style.marginBottom = "12px";
+  songName.style.whiteSpace = "nowrap";
+  songName.style.overflow = "hidden";
+  songName.style.textOverflow = "ellipsis";
+
+  updateSongName();
+
+  const controls = document.createElement("div");
+
+  controls.style.display = "flex";
+  controls.style.alignItems = "center";
+  controls.style.gap = "10px";
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "⏮";
+
+  const playBtn = document.createElement("button");
+  playBtn.textContent = "▶";
+
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "⏭";
+
+  [prevBtn, playBtn, nextBtn].forEach(btn => {
+    btn.style.background = "rgba(255,255,255,.08)";
+    btn.style.border = "none";
+    btn.style.color = "white";
+    btn.style.width = "42px";
+    btn.style.height = "42px";
+    btn.style.borderRadius = "12px";
+    btn.style.cursor = "pointer";
+    btn.style.fontSize = "18px";
+  });
+
+  prevBtn.onclick = () => {
+    previousTrack();
+  };
+
+  nextBtn.onclick = () => {
+    nextTrack();
+  };
+
+  playBtn.onclick = () => {
+    if (audio.paused) {
+      audio.play();
+      playBtn.textContent = "⏸";
+    } else {
+      audio.pause();
+      playBtn.textContent = "▶";
+    }
+  };
+
+  controls.appendChild(prevBtn);
+  controls.appendChild(playBtn);
+  controls.appendChild(nextBtn);
+
+  player.appendChild(songName);
+  player.appendChild(controls);
+
+  document.body.appendChild(player);
+
+  // CLICK TO ENTER
   const overlay = document.createElement("div");
 
   overlay.innerHTML = "Click to enter!";
