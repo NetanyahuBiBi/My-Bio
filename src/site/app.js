@@ -418,7 +418,7 @@ function initializeCopyButton(buttonElement, textToCopy, originalSubtitle) {
 
         setTimeout(() => {
           // 2. Switch Content
-          subtitleElement.textContent = '✔ Copied!';
+          subtitleElement.textContent = 'Copied!';
           buttonElement.classList.add('show-copied-feedback');
 
           // 3. Fade In
