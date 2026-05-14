@@ -98,7 +98,7 @@ const CONFIG = {
 
   "https://file.garden/agE3GkmcYA8xD0gx/Wasted%20Talent.mp3",
 
-  "https://file.garden/agE3GkmcYA8xD0gx/Wasted%20Talent.mp3",
+  "https://file.garden/agE3GkmcYA8xD0gx/Audioslave%20-%20Like%20a%20Stone%20%20Lyrics.mp3",
 
   "https://file.garden/agE3GkmcYA8xD0gx/2K%20(SUPERMAX).mp3",
 
